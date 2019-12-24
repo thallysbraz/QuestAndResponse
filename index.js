@@ -9,8 +9,14 @@ const PORT = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 
 //rotas
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/:nome/:lang", (req, res) => {
+  var nome = req.params.nome;
+  var lang = req.params.lang;
+  res.render("index", {
+    nome: nome,
+    lang: lang,
+    empresa: "First"
+  });
 });
 
 app.listen(PORT, () => {

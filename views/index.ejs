@@ -15,5 +15,11 @@
     <p>Nome: <%= nome %></p>
     <p>lang: <%= lang %></p>
     <p>Empresa: <%= empresa %></p>
+
+    <% if(msg) { %>
+    <h3><%= msg %></h3>
+    <% } else { %>
+    <h3><%= msg %></h3>
+    <% } %>
   </body>
 </html>

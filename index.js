@@ -13,11 +13,20 @@ app.get("/:nome/:lang", (req, res) => {
   var nome = req.params.nome;
   var lang = req.params.lang;
   var exibirMSG = true;
+  var produtos = [
+    { nome: "Doritos", preco: 4.5 },
+    { nome: "Guarana", preco: 7 },
+    { nome: "Ruffles", preco: 5 },
+    { nome: "Batata Palha", preco: 3.75 },
+    { nome: "Hamburguer", preco: 1 }
+  ];
+
   res.render("index", {
     nome: nome,
     lang: lang,
     empresa: "First",
-    msg: exibirMSG
+    msg: exibirMSG,
+    produtos: produtos
   });
 });
 

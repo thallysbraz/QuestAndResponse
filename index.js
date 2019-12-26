@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 //configurando EJS
 app.set("view engine", "ejs");
+app.use(express.static("public"));
 
 //rotas
 app.get("/:nome/:lang", (req, res) => {

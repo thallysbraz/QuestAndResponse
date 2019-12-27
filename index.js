@@ -1,8 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const app = express();
 //configurações
+const app = express();
 const PORT = process.env.PORT || 3000;
 
 //configurando EJS

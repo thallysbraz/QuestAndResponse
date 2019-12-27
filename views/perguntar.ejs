@@ -9,14 +9,20 @@
       </div>
 
       <div class="card-body">
-        <form>
+        <form method="POST" action="/salvarpergunta">
           <label>Titulo</label>
-          <input class="form-control" type="text" placeholder="Titulo" />
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Titulo"
+            name="titulo"
+          />
           <br />
           <label>Descrição</label>
           <textarea
             placeholder="descreve sua pergunta aqui"
             class="form-control"
+            name="descricao"
           ></textarea>
           <br />
           <button class="btn btn-dark">

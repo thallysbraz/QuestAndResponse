@@ -1,6 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const connection = require("./database/database"); //Import arquivo de config do banco
+const perguntaModel = require("./database/Pergunta"); //Import arquivo de config para criar tabela
+
+//conexão com banco de dados
+connection
+  .authenticate()
+  .then(() => {
+    console.log("conexão com banco de dados criada");
+  })
+  .catch(error => {
+    console.log("error ao conectar no banco: " + error);
+  });
+
 //configurações
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,6 +44,7 @@ app.post("/salvarpergunta", (req, res) => {
   });
 });
 
+//porta que o serve está rodando
 app.listen(PORT, () => {
   try {
     console.log("server startado, na porta: " + PORT);

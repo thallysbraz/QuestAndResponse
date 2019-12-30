@@ -88,7 +88,9 @@ app.get("/pergunta/:id", (req, res) => {
       //verificando se pergunta existe ou não
       if (pergunta) {
         // se achar a pergunta pelo ID
-        res.render("pergunta");
+        res.render("pergunta", {
+          pergunta: pergunta
+        });
       } else {
         // se não achar a pergunta
         res.redirect("/");

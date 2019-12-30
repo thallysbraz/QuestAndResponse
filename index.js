@@ -28,7 +28,16 @@ app.use(bodyParser.json());
 
 //rotas
 app.get("/", (req, res) => {
-  res.render("index");
+  Pergunta.findAll({ raw: true })
+    .then(perguntas => {
+      // renderizando view inicial e exibindo perguntas
+      res.render("index", {
+        perguntas: perguntas
+      });
+    })
+    .catch(Error => {
+      console.log("error ao pesquisar perguntas: " + Error);
+    });
 });
 //rota "/perguntar" para renderizar form de pergunta.
 app.get("/perguntar", (req, res) => {

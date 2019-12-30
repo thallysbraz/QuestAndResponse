@@ -79,7 +79,6 @@ app.post("/salvarpergunta", (req, res) => {
 //rota para filtrar pergunta especifica
 app.get("/pergunta/:id", (req, res) => {
   var id = req.params.id; //pegando id de pesquisa pelo parametro da URL
-  /*console.log("id: ", id); // confirmando se está pegando id */
 
   //Fazendo a busca no Banco de Dados
   Pergunta.findOne({
@@ -88,10 +87,24 @@ app.get("/pergunta/:id", (req, res) => {
     .then(pergunta => {
       //verificando se pergunta existe ou não
       if (pergunta) {
-        // se achar a pergunta pelo ID
-        res.render("pergunta", {
-          pergunta: pergunta
-        });
+        //Procurando resposta se a pergunta existir no Banco de Dados
+        Resposta.findAll({
+          where: { perguntaId: pergunta.id },
+          order: [["id", "DESC"]]
+        })
+          .then(respostas => {
+            res.render("pergunta", {
+              pergunta: pergunta,
+              respostas: respostas
+            });
+          })
+          .catch(error => {
+            res.status(404).json({
+              msg:
+                "Error ao pesquisar resposta da pergunta, por favor, refazer a busca",
+              error: error
+            });
+          });
       } else {
         // se não achar a pergunta
         res.redirect("/");
@@ -118,6 +131,7 @@ app.post("/responder", (req, res) => {
     perguntaId: perguntaId
   })
     .then(() => {
+      //redirect para a página da mesma pergunta que ele respondeu
       res.redirect(`/pergunta/${perguntaId}`);
     })
     .catch(error => {

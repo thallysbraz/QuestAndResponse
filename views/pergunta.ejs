@@ -7,6 +7,17 @@
     <p style="margin-top: auto;"><%= pergunta.descricao %></p>
     <hr />
 
+    <h4>Respostas</h4>
+
+    <% respostas.forEach(resposta => { %>
+    <div class="card" style="margin-top: 5px;">
+      <div class="card-body">
+        <p><%= resposta.corpo %></p>
+      </div>
+    </div>
+    <% }) %>
+
+    <hr />
     <form method="POST" action="/responder">
       <h4>Responda</h4>
       <textarea

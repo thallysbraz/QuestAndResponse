@@ -60,8 +60,6 @@ app.post("/salvarpergunta", (req, res) => {
   //pegando dados do form e verificando se está tudo certo.
   var title = req.body.titulo;
   var description = req.body.descricao;
-  //console.log pra verificar se está recebendo os dados da pergunta
-  //console.log("titulo: " + title + "descrição: " + description);
 
   // Pergunta.create para salvar no Banco de Dados
   Pergunta.create({
@@ -87,21 +85,21 @@ app.get("/pergunta/:id", (req, res) => {
     .then(pergunta => {
       //verificando se pergunta existe ou não
       if (pergunta) {
-        //Procurando resposta se a pergunta existir no Banco de Dados
+        //Procurando possiveis respostas se a pergunta existir no Banco de Dados
         Resposta.findAll({
           where: { perguntaId: pergunta.id },
           order: [["id", "DESC"]]
         })
           .then(respostas => {
             res.render("pergunta", {
+              //passando para a view renderizar
               pergunta: pergunta,
               respostas: respostas
             });
           })
           .catch(error => {
             res.status(404).json({
-              msg:
-                "Error ao pesquisar resposta da pergunta, por favor, refazer a busca",
+              msg: "Error ao pesquisar resposta, por favor, refazer a busca",
               error: error
             });
           });

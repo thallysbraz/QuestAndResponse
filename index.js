@@ -106,6 +106,25 @@ app.get("/pergunta/:id", (req, res) => {
     });
 });
 
+//rota para gravar resposta de pergunta
+app.post("/responder", (req, res) => {
+  //pegando corpo e id da pergunta pelo form enviado pelo usuário
+  var { corpo, perguntaId } = req.body;
+  console.log("corpo: " + corpo);
+  console.log("id: " + perguntaId);
+  //Resposta.create pra salvar no Banco de Dados a resposta recebida
+  Resposta.create({
+    corpo: corpo,
+    perguntaId: perguntaId
+  })
+    .then(() => {
+      res.redirect(`/pergunta/${perguntaId}`);
+    })
+    .catch(error => {
+      console.log("error ao salvar resposta: " + error);
+    });
+});
+
 //porta que o serve está rodando
 app.listen(PORT, () => {
   try {

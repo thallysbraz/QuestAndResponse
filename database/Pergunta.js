@@ -13,7 +13,7 @@ const Pergunta = connection.define("perguntas", {
 });
 
 Pergunta.sync({ force: false })
-  .then(() => {
+  .then(sucesso => {
     console.log("tabela Perguntas criada com sucesso");
   })
   .catch(error => {

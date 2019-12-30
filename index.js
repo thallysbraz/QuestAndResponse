@@ -1,8 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const connection = require("./database/database"); //Import arquivo de config do banco
-const Pergunta = require("./database/Pergunta"); //Import arquivo de config para criar tabela
+const connection = require("./database/database"); // Import arquivo de config do banco
+const Pergunta = require("./database/Pergunta"); // Import arquivo de config para criar tabela Pergunta
+const Resposta = require("./database/Resposta"); // Import arquivo de config para criar tabela Resposta
 
 //conexão com banco de dados
 connection

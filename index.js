@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const connection = require("./database/database"); //Import arquivo de config do banco
-const perguntaModel = require("./database/Pergunta"); //Import arquivo de config para criar tabela
+const Pergunta = require("./database/Pergunta"); //Import arquivo de config para criar tabela
 
 //conexão com banco de dados
 connection
@@ -30,18 +30,30 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.render("index");
 });
+//rota "/perguntar" para renderizar form de pergunta.
 app.get("/perguntar", (req, res) => {
   res.render("perguntar");
 });
 
+//rota "/salvarpergunta" para salvar a pergunta no Banco de Dados
 app.post("/salvarpergunta", (req, res) => {
-  var titulo = req.body.titulo;
-  var descricao = req.body.descricao;
-  console.log("titulo: " + titulo + "descrição: " + descricao);
-  res.json({
-    titulo: titulo,
-    descricao: descricao
-  });
+  //pegando dados do form e verificando se está tudo certo.
+  var title = req.body.titulo;
+  var description = req.body.descricao;
+  //console.log pra verificar se está recebendo os dados da pergunta
+  console.log("titulo: " + title + "descrição: " + description);
+
+  // Pergunta.create para salvar no Banco de Dados
+  Pergunta.create({
+    titulo: title,
+    descricao: description
+  })
+    .then(success => {
+      res.redirect("/");
+    })
+    .catch(error => {
+      console.log("error ao salvar pergunta: " + error);
+    });
 });
 
 //porta que o serve está rodando

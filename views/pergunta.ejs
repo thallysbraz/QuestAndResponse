@@ -6,6 +6,18 @@
     <h1 style="margin-top: auto;"><%= pergunta.titulo %></h1>
     <p style="margin-top: auto;"><%= pergunta.descricao %></p>
     <hr />
+
+    <form>
+      <h4>Responda</h4>
+      <textarea
+        placeholder="digite sua resposta"
+        class="form-control"
+        name="corpo"
+        style="margin-bottom: 5px;"
+      ></textarea>
+      <input type="hidden" name="pergunta" value="<%= pergunta.id %>" />
+      <button type="submit" class="btn btn-primary">Responder</button>
+    </form>
   </div>
 </body>
 

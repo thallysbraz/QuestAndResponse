@@ -27,10 +27,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //rotas
+//rota raiz
 app.get("/", (req, res) => {
   Pergunta.findAll({
     raw: true,
-    order: [["createdAt", "DESC"]]
+    order: [["id", "DESC"]]
     /*
     primeiro "createdAt" parametro nome da coluna a ordenar
     segundo "DESC" parametro tipo de ordenação
@@ -47,6 +48,7 @@ app.get("/", (req, res) => {
       console.log("error ao pesquisar perguntas: " + Error);
     });
 });
+
 //rota "/perguntar" para renderizar form de pergunta.
 app.get("/perguntar", (req, res) => {
   res.render("perguntar");
@@ -70,6 +72,34 @@ app.post("/salvarpergunta", (req, res) => {
     })
     .catch(error => {
       console.log("error ao salvar pergunta: " + error);
+    });
+});
+
+//rota para filtrar pergunta especifica
+app.get("/pergunta/:id", (req, res) => {
+  var id = req.params.id; //pegando id de pesquisa pelo parametro da URL
+  /*console.log("id: ", id); // confirmando se está pegando id */
+
+  //Fazendo a busca no Banco de Dados
+  Pergunta.findOne({
+    where: { id: id }
+  })
+    .then(pergunta => {
+      //verificando se pergunta existe ou não
+      if (pergunta) {
+        // se achar a pergunta pelo ID
+        res.render("pergunta");
+      } else {
+        // se não achar a pergunta
+        res.redirect("/");
+      }
+    })
+    .catch(error => {
+      res.status(404).json({
+        msg:
+          "Error ao pesquisar pergunta, por favor informe novamente o parametro de pesquisa",
+        error: error
+      });
     });
 });
 

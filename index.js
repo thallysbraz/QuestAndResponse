@@ -28,7 +28,15 @@ app.use(bodyParser.json());
 
 //rotas
 app.get("/", (req, res) => {
-  Pergunta.findAll({ raw: true })
+  Pergunta.findAll({
+    raw: true,
+    order: [["createdAt", "DESC"]]
+    /*
+    primeiro "createdAt" parametro nome da coluna a ordenar
+    segundo "DESC" parametro tipo de ordenação
+    DESC = Decrescente || ASC = Crescente 
+    */
+  })
     .then(perguntas => {
       // renderizando view inicial e exibindo perguntas
       res.render("index", {
@@ -50,7 +58,7 @@ app.post("/salvarpergunta", (req, res) => {
   var title = req.body.titulo;
   var description = req.body.descricao;
   //console.log pra verificar se está recebendo os dados da pergunta
-  console.log("titulo: " + title + "descrição: " + description);
+  //console.log("titulo: " + title + "descrição: " + description);
 
   // Pergunta.create para salvar no Banco de Dados
   Pergunta.create({
